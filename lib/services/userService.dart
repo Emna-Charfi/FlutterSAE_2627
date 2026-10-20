@@ -49,9 +49,9 @@ class Userservice {
     if(response.statusCode==200){
        String res = response.body;
        Map<String,dynamic> data = json.decode(res);
-      String username= data["username"];
+      String _email= data["email"]; //C'est pour le test
       SharedPreferences sharedpref= await SharedPreferences.getInstance();
-      sharedpref.setString("username", username);
+      sharedpref.setString("EMAIL", _email);
       msg =true;
     }
     return msg;

@@ -1,13 +1,14 @@
-import 'package:flutter_application_sae22/entites/game.dart';
+
 import 'dart:convert';
 import 'package:path/path.dart';
 
 import 'package:http/http.dart' as http;
+import 'package:projet_flutter_sae2/entities/film.dart';
 
-class GameService{
+class FilmService{
 
 
-  Future<String> addGame(Game game)async{
+  Future<String> addGame(Film film)async{
     String msg ="Failed";
 
     //URL
@@ -17,7 +18,7 @@ class GameService{
           "Content-Type": "application/json"
       };
     //Body
-      var body = json.encode(game.toJson());
+      var body = json.encode(film.toJson());
 
       //Requet 
       await http.post(url, headers: header, body: body).then((response) {
@@ -29,9 +30,9 @@ class GameService{
     return msg;
   }
   
-  Future<List<Game>> getAll() async{
+  Future<List<Film>> getAll() async{
 
-    List<Game> games = [];
+    List<Film> films = [];
 
     //URL
       Uri url = Uri.parse("https://backend-movies-esws.onrender.com/movies");
@@ -49,12 +50,12 @@ class GameService{
               //     games.add(Game.fromJson(element));
               //  }
                for(int i = 0 ; i< jsonGames.length; i++){
-                games.add(Game.fromJson(jsonGames[i]));
+                films.add(Film.fromJson(jsonGames[i]));
                }
           }
       });
-      print(games);
-    return  games;
+      print(films);
+    return  films;
   }
 
 

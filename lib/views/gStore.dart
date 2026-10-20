@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projet_flutter_sae2/entities/film.dart';
 import 'package:projet_flutter_sae2/items/gStoreItem.dart';
+import 'package:projet_flutter_sae2/services/filmService.dart';
 
 class GStorePage extends StatelessWidget {
   const GStorePage({super.key});
@@ -20,20 +21,23 @@ class GStorePage extends StatelessWidget {
       //   backgroundColor: Colors.black,
       // ),
       body: 
-      ListView.builder(itemBuilder:  (BuildContext context, int index) {
-          return GStoreItem(film: films[index]);
-    },
-      itemCount: films.length,
-      )
-      /* ListView(
-        children: [
-          GStoreItem(film: films[0]),
-          GStoreItem(film: films[1]),
-          GStoreItem(film: films[2]),
-          GStoreItem(film: films[3]),
-          
-        ],
-      ), */
+     FutureBuilder(
+        future: FilmService().getAll()
+      
+      , builder: (context, snapshot) {
+        if(snapshot.hasData){
+          return ListView.builder(
+            itemCount: snapshot.data?.length,
+            itemBuilder: (context, index) => GStoreItem(film: snapshot.data![index]),
+          );
+        }
+        else{
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
+      },)
+      
     );
   }
 }
