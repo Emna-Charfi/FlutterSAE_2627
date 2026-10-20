@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet_flutter_sae2/services/userService.dart';
 import 'package:projet_flutter_sae2/views/Singup.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -78,10 +79,26 @@ class _SigninPageState extends State<SigninPage> {
                   onPressed: () async{
                     if (keyForm.currentState!.validate()){
                       keyForm.currentState!.save();
-                     SharedPreferences prefs = await SharedPreferences.getInstance();
-                      prefs.setString("EMAIL", email!);
-
-                      Navigator.pushNamed(context, "/home");
+                     //SharedPreferences prefs = await SharedPreferences.getInstance();
+                     // prefs.setString("EMAIL", email!);
+                      bool validation = await Userservice.singin(email, password);
+                      if(validation) {
+                        Navigator.pushNamed(context, "/home");
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text('failed to connect'),
+                            action: SnackBarAction(
+                              label: 'OK',
+                              textColor: Colors.yellow,
+                              onPressed: () {
+                                // Insérer le code de restauration ici
+                                print('Action d\'annulation enclenchée');
+                              },
+                            ),
+                          ),
+                        );
+                      }
                       
                     }
                   },

@@ -1,6 +1,7 @@
 
 import 'package:path/path.dart';
-import 'package:projet_flutter_sae3/entities/film.dart';
+import 'package:projet_flutter_sae2/entities/film.dart';
+
 import 'package:sqflite/sqflite.dart';
 
 

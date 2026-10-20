@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:projet_flutter_sae2/views/gStore.dart';
 import 'package:projet_flutter_sae2/views/navNarHome.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Mydrawer extends StatefulWidget {
   const Mydrawer({super.key});
@@ -10,6 +11,20 @@ class Mydrawer extends StatefulWidget {
 }
 
 class _MydrawerState extends State<Mydrawer> {
+  String emailShared = "";
+    void getFromShared()async{
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      setState(() {
+        emailShared = prefs.getString("EMAIL")!;
+      });
+      
+    }
+    @override
+  void initState() {
+    
+    getFromShared();
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -19,7 +34,7 @@ class _MydrawerState extends State<Mydrawer> {
           UserAccountsDrawerHeader(
           
                   accountName: const Text("Emna Charfi"),
-                  accountEmail: const Text("Emna@email.com"),
+                  accountEmail:  Text(emailShared),
                   // 1. Photo de profil ronde
                   currentAccountPicture: const CircleAvatar(
           backgroundImage: AssetImage('assets/images/esprit.png'),

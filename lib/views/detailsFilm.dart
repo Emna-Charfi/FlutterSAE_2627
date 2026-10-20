@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:projet_flutter_sae2/bd/db.dart';
 import 'package:projet_flutter_sae2/entities/film.dart';
 
 class DetailsFilm extends StatelessWidget {
@@ -29,8 +30,11 @@ class DetailsFilm extends StatelessWidget {
             Text("${film.price} DT", style: TextStyle(color: Colors.black, fontSize: 30, fontWeight: FontWeight.bold),),
             SizedBox(
               width: 200,
-              child: ElevatedButton.icon(onPressed: () {
-                
+              child: ElevatedButton.icon(onPressed: ()async {
+                await BD.addItem(film);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text("${film.name} game ajoute au panier!"))
+                );
               }, 
               label: Text("Acheter", style: TextStyle(color: Colors.white, fontSize: 18),),
               icon: Icon(Icons.shopping_bag, color: Colors.white,),
